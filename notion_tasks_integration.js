@@ -24,16 +24,13 @@ async function updateTaskLabel(task) {
   const label = task.properties.Label?.select?.name;
 
   if (status === 'Done' && label === 'Today') {
-    await notion.pages.update({
+   await notion.pages.update({
       page_id: task.id,
       properties: {
-        Label: {
-          select: {
-            name: 'Past',
-          },
-        },
+        Label: { select: { name: "Past" } },
+        "Date Completed": { date: { start: new Date().toISOString() } },
       },
-    });
+  });
     console.log(`✅ Moved "${task.properties.Name.title[0]?.plain_text}" to Past`);
   }
 }
